@@ -16,3 +16,21 @@
  */
 
 package com.example.android.devbyteviewer.database
+
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+
+@Dao
+interface VideoDao {
+
+    /**Offline cache need two methods**/
+
+    //load values from the cache
+    @Query("SELECT * FROM DatabaseVideo")
+    fun getVideos(): List<DatabaseVideo>
+
+    //store values
+    @Insert
+    fun insertAll(vararg videos: DatabaseVideo)
+}
