@@ -16,3 +16,36 @@
  */
 
 package com.example.android.devbyteviewer.repository
+
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
+import com.example.android.devbyteviewer.database.VideosDatabase
+import com.example.android.devbyteviewer.database.asDomainModel
+import com.example.android.devbyteviewer.domain.Video
+import com.example.android.devbyteviewer.network.Network
+import com.example.android.devbyteviewer.network.asDatabaseModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+
+class VideosRepository(private val database: VideosDatabase) {
+
+
+    //From the database
+    val videos: LiveData<List<Video>> = Transformations.map(database.videoDao.getVideos()) {
+        it.asDomainModel()
+    }
+
+    //Get the data from the network and put it in the database
+    suspend fun refreshVideos() {
+        withContext(Dispatchers.IO) {
+
+            //Make a network call to getPlaylist(), and using the await() function
+            //to tell the coroutine to suspend until the data is available.
+            val playlist = Network.devbytes.getPlaylist().await()
+
+            //Note the asterisk * is the spread operator. It allows you to pass in an array to
+            // a function that expects varargs.
+            database.videoDao.insertAll(*playlist.asDatabaseModel())
+        }
+    }
+}
