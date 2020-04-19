@@ -29,13 +29,17 @@ import kotlinx.coroutines.withContext
 
 class VideosRepository(private val database: VideosDatabase) {
 
+    /**
+     * A playlist of videos from the database, that can be shown on the screen.
+     */
+    val videos: LiveData<List<Video>> =
+            Transformations.map(database.videoDao.getVideos()) {
+                it.asDomainModel()
+            }
 
-    //From the database
-    val videos: LiveData<List<Video>> = Transformations.map(database.videoDao.getVideos()) {
-        it.asDomainModel()
-    }
-
-    //Get the data from the network and put it in the database
+    /**
+     *Get the data from the network and put it in the database
+     */
     suspend fun refreshVideos() {
         withContext(Dispatchers.IO) {
 

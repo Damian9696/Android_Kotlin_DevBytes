@@ -63,10 +63,13 @@ class DevByteViewModel(application: Application) : AndroidViewModel(application)
     //Repository
     private val videosRepository = VideosRepository(database)
 
+    /**
+     * init{} is called immediately when this ViewModel is created.
+     */
     init {
-
-        //Refresh videos using the repository
         viewModelScope.launch {
+
+            //Refresh videos using the repository
             videosRepository.refreshVideos()
         }
     }

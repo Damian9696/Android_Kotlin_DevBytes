@@ -28,8 +28,7 @@ data class DatabaseVideo constructor(
         val updated: String,
         val title: String,
         val description: String,
-        val thumbnail: String
-)
+        val thumbnail: String)
 
 /**
  * Convert from database objects to domain objects
@@ -41,7 +40,6 @@ fun List<DatabaseVideo>.asDomainModel(): List<Video> {
                 title = it.title,
                 description = it.description,
                 updated = it.updated,
-                thumbnail = it.thumbnail
-        )
+                thumbnail = it.thumbnail)
     }
 }

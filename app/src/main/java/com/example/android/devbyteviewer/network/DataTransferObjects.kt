@@ -72,7 +72,6 @@ fun NetworkVideoContainer.asDatabaseModel(): Array<DatabaseVideo> {
                 description = it.description,
                 url = it.url,
                 updated = it.updated,
-                thumbnail = it.thumbnail
-        )
+                thumbnail = it.thumbnail)
     }.toTypedArray()
 }

@@ -15,4 +15,3 @@
 # gradle
 gradle/
 gradlew*
-/app/proguard-rules.pro
