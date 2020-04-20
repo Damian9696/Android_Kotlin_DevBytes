@@ -27,6 +27,11 @@ import retrofit2.HttpException
 /** Pre-fetch data when the app is in the background **/
 
 class RefreshDataWorker(appContext: Context, params: WorkerParameters) : CoroutineWorker(appContext, params) {
+
+    companion object{
+        const val WORK_NAME = "RefreshDataWorker"
+    }
+
     override suspend fun doWork(): Payload {
 
         val database = getDatabase(applicationContext)
